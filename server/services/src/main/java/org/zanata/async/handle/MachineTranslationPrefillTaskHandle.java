@@ -34,8 +34,6 @@ public class MachineTranslationPrefillTaskHandle extends AsyncTaskHandle<Void>
     private static final long serialVersionUID = 1704257523049053603L;
     private String triggeredBy;
     private String targetVersion;
-    private long totalUnits;
-    private long actualProgress;
 
     public MachineTranslationPrefillTaskHandle(AsyncTaskKey key) {
         super.setKeyId(key.id());
@@ -63,22 +61,6 @@ public class MachineTranslationPrefillTaskHandle extends AsyncTaskHandle<Void>
                 .add("maxProgress", getMaxProgress())
                 .add("triggeredBy", triggeredBy)
                 .toString();
-    }
-
-    /**
-     * Set the total number of units for more fine grained representation
-     * @param units
-     */
-    public void setTotalUnits(long units) {
-        this.totalUnits = units;
-    }
-
-    @Override
-    public long increaseProgress(long units) {
-        actualProgress += units;
-        int percentage = (int) (((float) actualProgress / (float) totalUnits) * 100);
-        setCurrentProgress(Math.min(percentage, 100));
-        return getCurrentProgress();
     }
 
 }
